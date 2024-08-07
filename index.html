@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#fffdeb">
+    <meta name="theme-color" content="#fffdeb">
+    <link href="./css/style.css" type="text/css" rel="stylesheet">
+    <script src="./scripts/melodyGenerator.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.js" type="text/javascript"></script>
+  </head>
+
+  <body>
+    <div id="top-bar">
+        <h1 id="melody-title">M E L O D Y</h1>
+        <div id="title-bar"></div>
+        <h1 id="generator-title">G E N E R A T O R</h1>
+    </div>
+    <div id="piano-container">
+        <div class="white-key" id="A0" number="0"><h3>A0</h3></div>
+        <div class="black-key" id="Bb0" number="1"><h3>Bb0</h3></div>
+        <div class="white-key" id="B0" number="2"><h3>B0</h3></div>
+        <div class="white-key" id="C1" number="3"><h3>C1</h3></div>
+        <div class="black-key" id="Db1" number="4"><h3>Db1</h3></div>
+        <div class="white-key" id="D1" number="5"><h3>D1</h3></div>
+        <div class="black-key" id="Eb1" number="6"><h3>Eb1</h3></div>
+        <div class="white-key" id="E1" number="7"><h3>E1</h3></div>
+        <div class="white-key" id="F1" number="8"><h3>F1</h3></div>
+        <div class="black-key" id="Gb1" number="9"><h3>Gb1</h3></div>
+        <div class="white-key" id="G1" number="10"><h3>G1</h3></div>
+        <div class="black-key" id="Ab1" number="11"><h3>Ab1</h3></div>
+        <div class="white-key" id="A1" number="12"><h3>A1</h3></div>
+        <div class="black-key" id="Bb1" number="13"><h3>Bb1</h3></div>
+        <div class="white-key" id="B1" number="14"><h3>B1</h3></div>
+        <div class="white-key" id="C2" number="15"><h3>C2</h3></div>
+        <div class="black-key" id="Db2" number="16"><h3>Db2</h3></div>
+        <div class="white-key" id="D2" number="17"><h3>D2</h3></div>
+        <div class="black-key" id="Eb2" number="18"><h3>Eb2</h3></div>
+        <div class="white-key" id="E2" number="19"><h3>E2</h3></div>
+        <div class="white-key" id="F2" number="20"><h3>F2</h3></div>
+        <div class="black-key" id="Gb2" number="21"><h3>Gb2</h3></div>
+        <div class="white-key" id="G2" number="22"><h3>G2</h3></div>
+        <div class="black-key" id="Ab2" number="23"><h3>Ab2</h3></div>
+        <div class="white-key" id="A2" number="24"><h3>A2</h3></div>
+        <div class="black-key" id="Bb2" number="25"><h3>Bb2</h3></div>
+        <div class="white-key" id="B2" number="26"><h3>B2</h3></div>
+        <div class="white-key" id="C3" number="27"><h3>C3</h3></div>
+        <div class="black-key" id="Db3" number="28"><h3>Db3</h3></div>
+        <div class="white-key" id="D3" number="29"><h3>D3</h3></div>
+        <div class="black-key" id="Eb3" number="30"><h3>Eb3</h3></div>
+        <div class="white-key" id="E3" number="31"><h3>E3</h3></div>
+        <div class="white-key" id="F3" number="32"><h3>F3</h3></div>
+        <div class="black-key" id="Gb3" number="33"><h3>Gb3</h3></div>
+        <div class="white-key" id="G3" number="34"><h3>G3</h3></div>
+        <div class="black-key" id="Ab3" number="35"><h3>Ab3</h3></div>
+        <div class="white-key" id="A3" number="36"><h3>A3</h3></div>
+        <div class="black-key" id="Bb3" number="37"><h3>Bb3</h3></div>
+        <div class="white-key" id="B3" number="38"><h3>B3</h3></div>
+        <div class="white-key" id="C4" number="39"><h3>C4</h3></div>
+        <div class="black-key" id="Db4" number="40"><h3>Db4</h3></div>
+        <div class="white-key" id="D4" number="41"><h3>D4</h3></div>
+        <div class="black-key" id="Eb4" number="42"><h3>Eb4</h3></div>
+        <div class="white-key" id="E4" number="43"><h3>E4</h3></div>
+        <div class="white-key" id="F4" number="44"><h3>F4</h3></div>
+        <div class="black-key" id="Gb4" number="45"><h3>Gb4</h3></div>
+        <div class="white-key" id="G4" number="46"><h3>G4</h3></div>
+        <div class="black-key" id="Ab4" number="47"><h3>Ab4</h3></div>
+        <div class="white-key" id="A4" number="48"><h3>A4</h3></div>
+        <div class="black-key" id="Bb4" number="49"><h3>Bb4</h3></div>
+        <div class="white-key" id="B4" number="50"><h3>B4</h3></div>
+        <div class="white-key" id="C5" number="51"><h3>C5</h3></div>
+        <div class="black-key" id="Db5" number="52"><h3>Db5</h3></div>
+        <div class="white-key" id="D5" number="53"><h3>D5</h3></div>
+        <div class="black-key" id="Eb5" number="54"><h3>Eb5</h3></div>
+        <div class="white-key" id="E5" number="55"><h3>E5</h3></div>
+        <div class="white-key" id="F5" number="56"><h3>F5</h3></div>
+        <div class="black-key" id="Gb5" number="57"><h3>Gb5</h3></div>
+        <div class="white-key" id="G5" number="58"><h3>G5</h3></div>
+        <div class="black-key" id="Ab5" number="59"><h3>Ab5</h3></div>
+        <div class="white-key" id="A5" number="60"><h3>A5</h3></div>
+        <div class="black-key" id="Bb5" number="61"><h3>Bb5</h3></div>
+        <div class="white-key" id="B5" number="62"><h3>B5</h3></div>
+        <div class="white-key" id="C6" number="63"><h3>C6</h3></div>
+        <div class="black-key" id="Db6" number="64"><h3>Db6</h3></div>
+        <div class="white-key" id="D6" number="65"><h3>D6</h3></div>
+        <div class="black-key" id="Eb6" number="66"><h3>Eb6</h3></div>
+        <div class="white-key" id="E6" number="67"><h3>E6</h3></div>
+        <div class="white-key" id="F6" number="68"><h3>F6</h3></div>
+        <div class="black-key" id="Gb6" number="69"><h3>Gb6</h3></div>
+        <div class="white-key" id="G6" number="70"><h3>G6</h3></div>
+        <div class="black-key" id="Ab6" number="71"><h3>Ab6</h3></div>
+        <div class="white-key" id="A6" number="72"><h3>A6</h3></div>
+        <div class="black-key" id="Bb6" number="73"><h3>Bb6</h3></div>
+        <div class="white-key" id="B6" number="74"><h3>B6</h3></div>
+        <div class="white-key" id="C7" number="75"><h3>C7</h3></div>
+        <div class="black-key" id="Db7" number="76"><h3>Db7</h3></div>
+        <div class="white-key" id="D7" number="77"><h3>D7</h3></div>
+        <div class="black-key" id="Eb7" number="78"><h3>Eb7</h3></div>
+        <div class="white-key" id="E7" number="79"><h3>E7</h3></div>
+        <div class="white-key" id="F7" number="80"><h3>F7</h3></div>
+        <div class="black-key" id="Gb7" number="81"><h3>Gb7</h3></div>
+        <div class="white-key" id="G7" number="82"><h3>G7</h3></div>
+        <div class="black-key" id="Ab7" number="83"><h3>Ab7</h3></div>
+        <div class="white-key" id="A7" number="84"><h3>A7</h3></div>
+        <div class="black-key" id="Bb7" number="85"><h3>Bb7</h3></div>
+        <div class="white-key" id="B7" number="86"><h3>B7</h3></div>
+        <div class="white-key" id="C8" number="87"><h3>C8</h3></div>
+    </div>
+    <h2>Choose which notes to allow in the melody by scrolling through the piano and clicking keys to add or remove them, or set a range by choosing the lowest and highest notes.</h2>
+    <form>
+        <div id="settings-bar">
+            <div id="lowest-note-box">
+                <label for="lowest-note">Lowest note:</label>
+                <select id="lowest-note" name="lowestNote" size="7">
+                    <option value="A0" number="0">A0</option>
+                    <option value="Bb0" number="1">Bb0</option>
+                    <option value="B0" number="2">B0</option>
+                    <option value="C1" number="3">C1</option>
+                    <option value="Db1" number="4">Db1</option>
+                    <option value="D1" number="5">D1</option>
+                    <option value="Eb1" number="6">Eb1</option>
+                    <option value="E1" number="7">E1</option>
+                    <option value="F1" number="8">F1</option>
+                    <option value="Gb1" number="9">Gb1</option>
+                    <option value="G1" number="10">G1</option>
+                    <option value="Ab1" number="11">Ab1</option>
+                    <option value="A1" number="12">A1</option>
+                    <option value="Bb1" number="13">Bb1</option>
+                    <option value="B1" number="14">B1</option>
+                    <option value="C2" number="15">C2</option>
+                    <option value="Db2" number="16">Db2</option>
+                    <option value="D2" number="17">D2</option>
+                    <option value="Eb2" number="18">Eb2</option>
+                    <option value="E2" number="19">E2</option>
+                    <option value="F2" number="20">F2</option>
+                    <option value="Gb2" number="21">Gb2</option>
+                    <option value="G2" number="22">G2</option>
+                    <option value="Ab2" number="23">Ab2</option>
+                    <option value="A2" number="24">A2</option>
+                    <option value="Bb2" number="25">Bb2</option>
+                    <option value="B2" number="26">B2</option>
+                    <option value="C3" number="27">C3</option>
+                    <option value="Db3" number="28">Db3</option>
+                    <option value="D3" number="29">D3</option>
+                    <option value="Eb3" number="30">Eb3</option>
+                    <option value="E3" number="31">E3</option>
+                    <option value="F3" number="32">F3</option>
+                    <option value="Gb3" number="33">Gb3</option>
+                    <option value="G3" number="34">G3</option>
+                    <option value="Ab3" number="35">Ab3</option>
+                    <option value="A3" number="36">A3</option>
+                    <option value="Bb3" number="37">Bb3</option>
+                    <option value="B3" number="38">B3</option>
+                    <option value="C4" number="39">C4</option>
+                    <option value="Db4" number="40">Db4</option>
+                    <option value="D4" number="41">D4</option>
+                    <option value="Eb4" number="42">Eb4</option>
+                    <option value="E4" number="43">E4</option>
+                    <option value="F4" number="44">F4</option>
+                    <option value="Gb4" number="45">Gb4</option>
+                    <option value="G4" number="46">G4</option>
+                    <option value="Ab4" number="47">Ab4</option>
+                    <option value="A4" number="48">A4</option>
+                    <option value="Bb4" number="49">Bb4</option>
+                    <option value="B4" number="50">B4</option>
+                    <option value="C5" number="51">C5</option>
+                    <option value="Db5" number="52">Db5</option>
+                    <option value="D5" number="53">D5</option>
+                    <option value="Eb5" number="54">Eb5</option>
+                    <option value="E5" number="55">E5</option>
+                    <option value="F5" number="56">F5</option>
+                    <option value="Gb5" number="57">Gb5</option>
+                    <option value="G5" number="58">G5</option>
+                    <option value="Ab5" number="59">Ab5</option>
+                    <option value="A5" number="60">A5</option>
+                    <option value="Bb5" number="61">Bb5</option>
+                    <option value="B5" number="62">B5</option>
+                    <option value="C6" number="63">C6</option>
+                    <option value="Db6" number="64">Db6</option>
+                    <option value="D6" number="65">D6</option>
+                    <option value="Eb6" number="66">Eb6</option>
+                    <option value="E6" number="67">E6</option>
+                    <option value="F6" number="68">F6</option>
+                    <option value="Gb6" number="69">Gb6</option>
+                    <option value="G6" number="70">G6</option>
+                    <option value="Ab6" number="71">Ab6</option>
+                    <option value="A6" number="72">A6</option>
+                    <option value="Bb6" number="73">Bb6</option>
+                    <option value="B6" number="74">B6</option>
+                    <option value="C7" number="75">C7</option>
+                    <option value="Db7" number="76">Db7</option>
+                    <option value="D7" number="77">D7</option>
+                    <option value="Eb7" number="78">Eb7</option>
+                    <option value="E7" number="79">E7</option>
+                    <option value="F7" number="80">F7</option>
+                    <option value="Gb7" number="81">Gb7</option>
+                    <option value="G7" number="82">G7</option>
+                    <option value="Ab7" number="83">Ab7</option>
+                    <option value="A7" number="84">A7</option>
+                    <option value="Bb7" number="85">Bb7</option>
+                    <option value="B7" number="86">B7</option>
+                    <option value="C8" number="87">C8</option>
+                </select>
+            </div>
+            <div id="highest-note-box">
+                <label for="highest-note">Highest note:</label>
+                <select id="highest-note" name="highestNote" size="7">
+                    <option value="A0" number="0">A0</option>
+                    <option value="Bb0" number="1">Bb0</option>
+                    <option value="B0" number="2">B0</option>
+                    <option value="C1" number="3">C1</option>
+                    <option value="Db1" number="4">Db1</option>
+                    <option value="D1" number="5">D1</option>
+                    <option value="Eb1" number="6">Eb1</option>
+                    <option value="E1" number="7">E1</option>
+                    <option value="F1" number="8">F1</option>
+                    <option value="Gb1" number="9">Gb1</option>
+                    <option value="G1" number="10">G1</option>
+                    <option value="Ab1" number="11">Ab1</option>
+                    <option value="A1" number="12">A1</option>
+                    <option value="Bb1" number="13">Bb1</option>
+                    <option value="B1" number="14">B1</option>
+                    <option value="C2" number="15">C2</option>
+                    <option value="Db2" number="16">Db2</option>
+                    <option value="D2" number="17">D2</option>
+                    <option value="Eb2" number="18">Eb2</option>
+                    <option value="E2" number="19">E2</option>
+                    <option value="F2" number="20">F2</option>
+                    <option value="Gb2" number="21">Gb2</option>
+                    <option value="G2" number="22">G2</option>
+                    <option value="Ab2" number="23">Ab2</option>
+                    <option value="A2" number="24">A2</option>
+                    <option value="Bb2" number="25">Bb2</option>
+                    <option value="B2" number="26">B2</option>
+                    <option value="C3" number="27">C3</option>
+                    <option value="Db3" number="28">Db3</option>
+                    <option value="D3" number="29">D3</option>
+                    <option value="Eb3" number="30">Eb3</option>
+                    <option value="E3" number="31">E3</option>
+                    <option value="F3" number="32">F3</option>
+                    <option value="Gb3" number="33">Gb3</option>
+                    <option value="G3" number="34">G3</option>
+                    <option value="Ab3" number="35">Ab3</option>
+                    <option value="A3" number="36">A3</option>
+                    <option value="Bb3" number="37">Bb3</option>
+                    <option value="B3" number="38">B3</option>
+                    <option value="C4" number="39">C4</option>
+                    <option value="Db4" number="40">Db4</option>
+                    <option value="D4" number="41">D4</option>
+                    <option value="Eb4" number="42">Eb4</option>
+                    <option value="E4" number="43">E4</option>
+                    <option value="F4" number="44">F4</option>
+                    <option value="Gb4" number="45">Gb4</option>
+                    <option value="G4" number="46">G4</option>
+                    <option value="Ab4" number="47">Ab4</option>
+                    <option value="A4" number="48">A4</option>
+                    <option value="Bb4" number="49">Bb4</option>
+                    <option value="B4" number="50">B4</option>
+                    <option value="C5" number="51">C5</option>
+                    <option value="Db5" number="52">Db5</option>
+                    <option value="D5" number="53">D5</option>
+                    <option value="Eb5" number="54">Eb5</option>
+                    <option value="E5" number="55">E5</option>
+                    <option value="F5" number="56">F5</option>
+                    <option value="Gb5" number="57">Gb5</option>
+                    <option value="G5" number="58">G5</option>
+                    <option value="Ab5" number="59">Ab5</option>
+                    <option value="A5" number="60">A5</option>
+                    <option value="Bb5" number="61">Bb5</option>
+                    <option value="B5" number="62">B5</option>
+                    <option value="C6" number="63">C6</option>
+                    <option value="Db6" number="64">Db6</option>
+                    <option value="D6" number="65">D6</option>
+                    <option value="Eb6" number="66">Eb6</option>
+                    <option value="E6" number="67">E6</option>
+                    <option value="F6" number="68">F6</option>
+                    <option value="Gb6" number="69">Gb6</option>
+                    <option value="G6" number="70">G6</option>
+                    <option value="Ab6" number="71">Ab6</option>
+                    <option value="A6" number="72">A6</option>
+                    <option value="Bb6" number="73">Bb6</option>
+                    <option value="B6" number="74">B6</option>
+                    <option value="C7" number="75">C7</option>
+                    <option value="Db7" number="76">Db7</option>
+                    <option value="D7" number="77">D7</option>
+                    <option value="Eb7" number="78">Eb7</option>
+                    <option value="E7" number="79">E7</option>
+                    <option value="F7" number="80">F7</option>
+                    <option value="Gb7" number="81">Gb7</option>
+                    <option value="G7" number="82">G7</option>
+                    <option value="Ab7" number="83">Ab7</option>
+                    <option value="A7" number="84">A7</option>
+                    <option value="Bb7" number="85">Bb7</option>
+                    <option value="B7" number="86">B7</option>
+                    <option value="C8" number="87">C8</option>
+                </select>
+            </div>
+            <div id="notes-num-box">
+                <label for="notes-num">Number of notes:</label>
+                <p id="note-range-value">3</p>
+                <input type="range" id="notes-num" name="notesNumber" min="3" max="24" value="3">
+            </div>
+            <div id="max-step-box">
+                <label for="max-step">Max step size:</label>
+                <p id="step-range-value">1 note</p>
+                <input type="range" id="max-step" name="maxStepSize" min="1" max="87" value="1">
+            </div>
+        </div>
+    </form>
+    <div id="buttons-container">
+        <button type="button" id="generate-button"><h4>generate</h4></button>
+        <button type="button" id="play-button"><h4>play melody</h4></button>
+        <div id="bpm-box">
+            <label for="bpm" id="bpm-label">BPM (40-400):</label>
+            <input type="number" id="bpm" name="bpm" min="40" max="400" value="120">
+        </div>
+    </div>
+    <audio id="audio" type="audio" src="./resources/sounds/Notes.mp3" loop></audio>
+  </body>
+</html>
