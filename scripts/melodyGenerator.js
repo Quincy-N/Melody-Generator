@@ -163,6 +163,7 @@ maxStepSelector.addEventListener("input", () => {
 generateButton.addEventListener("click", () => {
     if (selectedNotes[0] != undefined) {
         generateButton.style.backgroundColor = "hsl(37, 94%, 62%)";
+        generateButton.style.transform = "scale(.95,.95)";
         removeHighlight = setTimeout(() => {
             generateButton.removeAttribute("style");
         }, 200);
