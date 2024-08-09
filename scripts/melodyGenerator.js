@@ -250,7 +250,7 @@ playButton.addEventListener("click", () => {
                 melodySounds[i].play();
                 fadingTimeout = setTimeout(() => {
                     if (i == melodySounds.length - 1) {
-                        melodySounds[i].fade(1,0, 2000-bpmTiming-fadeOutConstant);
+                        melodySounds[i].fade(1,0, 2000-bpmTiming+fadeOutConstant);
                     } else {
                         melodySounds[i].fade(1,0,fadeOutConstant);
                     }
@@ -262,7 +262,7 @@ playButton.addEventListener("click", () => {
                         }
                         allowPlay = true;
                         playButton.style.backgroundColor = "hsl(120, 58%, 48%)";
-                    }, 2000 - bpmTiming);
+                    }, 2000);
                 }
             }, bpmTiming*i);
         }
