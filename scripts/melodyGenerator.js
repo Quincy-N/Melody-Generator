@@ -13,6 +13,7 @@ const showMelodyCheckbox = document.getElementById("show-melody");
 const bpmInput = document.getElementById("bpm");
 const generateButton = document.getElementById("generate-button");
 const playButton = document.getElementById("play-button");
+const errorModal = document.getElementById("error-modal");
 const audio = document.getElementById("audio");
 let selectedNotes = [];
 let melodyIndices = [];
@@ -237,23 +238,39 @@ for (let key of keys) {
         updateSelectedKeys();
         if (allowPlay != false) {
             if (keyPlaying != sounds[key.getAttribute('id')] && keyPlaying != undefined) {
-                keyPlaying.fade(1, 0, 75);
+                clearTimeout(keyTimeout);
+                keyPlaying.fade(1, 0, 250);
                 let lastKeyPlaying = keyPlaying;
                 setTimeout(() => {
                     lastKeyPlaying.stop();
-                }, 75);
+                }, 500);
             }
             console.log(key.getAttribute('number'));
             if (keyPlaying == sounds[key.getAttribute('id')]) {
+                let keyDouble = new Howl({
+                    src: `./resources/sounds/${key.getAttribute("id")}.mp3`
+                });
                 clearTimeout(keyTimeout);
-                keyPlaying.stop();
+                keyPlaying.fade(1, 0, 150);
+                let lastKeyPlaying = keyPlaying;
+                setTimeout(() => {
+                    lastKeyPlaying.stop();
+                }, 155);
+                keyDouble.fade(0, 1, 150);
+                keyDouble.play();
+                keyPlaying = keyDouble;
+                keyTimeout = setTimeout(() => {
+                    keyPlaying.fade(1, 0, 150);
+                }, 500);
+            } else {
+                sounds[key.getAttribute('id')].fade(0, 1, 150);
+                sounds[key.getAttribute('id')].play();
+                keyPlaying = sounds[key.getAttribute('id')];
+                keyTimeout = setTimeout(() => {
+                    sounds[key.getAttribute('id')].fade(1, 0, 150);
+                }, 500);
             }
-            sounds[key.getAttribute('id')].fade(0, 1, 50);
-            sounds[key.getAttribute('id')].play();
-            keyPlaying = sounds[key.getAttribute('id')];
-            keyTimeout = setTimeout(() => {
-                sounds[key.getAttribute('id')].fade(1, 0, 75);
-            }, 500);
+            
         }
     })
 }
@@ -339,7 +356,8 @@ generateButton.addEventListener("click", () => {
                     while (options[i].length == 0) {
                         i--;
                         if (i == 0 && startingNoteSelector.value != 'ANY') {
-                            alert('A melody that meets the selected requirements could not be generated. Consider changing the max step size or starting/ending note.');
+                            errorModal.showModal();
+                            document.getElementById("close-dialog").blur();
                             melody = [];
                             melodyIndices = [];
                             melodySounds = [];
@@ -455,6 +473,10 @@ playButton.addEventListener("click", () => {
             }, bpmTiming * i);
         }
     }
+});
+
+document.getElementById("close-dialog").addEventListener('click', () => {
+    errorModal.close();
 });
 
 // COSMETIC (changes select box size when screen size is small)

@@ -579,23 +579,23 @@ input[type="range"] {
     background: transparent;
     cursor: pointer;
     width: 100%;
-  }
+}
   
   /* Removes default focus */
-  input[type="range"]:focus {
+input[type="range"]:focus {
     outline: none;
-  }
+}
   
   /******** Chrome, Safari, Opera and Edge Chromium styles ********/
   /* slider track */
-  input[type="range"]::-webkit-slider-runnable-track {
+input[type="range"]::-webkit-slider-runnable-track {
     background-color: #d1d1d1;
     border-radius: 0.5rem;
     height: 0.5rem;
-  }
+}
   
   /* slider thumb */
-  input[type="range"]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
     margin-top: -6px; /* Centers thumb on the track */
@@ -604,35 +604,79 @@ input[type="range"] {
     border-radius: 1.25rem;
     height: 1.25rem;
     width: 1.25rem;
-  }
+}
   
-  input[type="range"]:focus::-webkit-slider-thumb {
+input[type="range"]:focus::-webkit-slider-thumb {
     outline: 3px solid #e69719;
     outline-offset: 0.125rem;
-  }
+}
   
   /*********** Firefox styles ***********/
   /* slider track */
-  input[type="range"]::-moz-range-track {
+input[type="range"]::-moz-range-track {
     background-color: #d1d1d1;
     border-radius: 0.5rem;
     height: 0.5rem;
-  }
+}
   
   /* slider thumb */
-  input[type="range"]::-moz-range-thumb {
+input[type="range"]::-moz-range-thumb {
     background-color: #e69719;
     box-shadow: none;
     border: none; /*Removes extra border that FF applies*/
     border-radius: 1.25rem;
     height: 1.25rem;
     width: 1.25rem;
-  }
+}
   
-  input[type="range"]:focus::-moz-range-thumb{
+input[type="range"]:focus::-moz-range-thumb{
     outline: 3px solid #e69719;
     outline-offset: 0.125rem;
-  }
+}
+
+dialog {
+    width: 60%;
+    min-width: 320px;
+    max-width: 600px;
+    height: fit-content;
+    background-color: rgb(34, 34, 34);
+    margin: auto;
+    padding: 4vw 3vw;
+    border: none;
+    border-radius: 12px;
+    display: grid;
+    grid-template-rows: max-content max-content;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: max(10px, 2vw);
+    justify-content: center;
+}
+
+dialog::backdrop {
+    background: hsla(0, 0%, 51%, 0.4);
+}
+
+dialog:not([open]) {
+    display: none;
+}
+
+dialog p {
+    grid-row: 1 / 2;
+    grid-column: 1 / span 3;
+    text-align: center;
+}
+
+dialog button {
+    width: fit-content;
+    height: max(2em, 3vw);
+    font-size: max(1.5vw, .8em);
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+    align-self: center;
+    justify-self: center;
+    justify-content: center;
+    align-items: center;
+    padding: max(1em, .2vw) 3vw;
+}
 
 @media (max-width: 680px) {
     #top-bar {
