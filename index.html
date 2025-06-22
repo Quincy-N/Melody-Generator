@@ -111,6 +111,15 @@
         <div class="white-key" id="B7" number="86"><h3>B7</h3></div>
         <div class="white-key" id="C8" number="87"><h3>C8</h3></div>
     </div>
+    <div id="melody-display"></div>
+    <div id="buttons-container">
+        <button type="button" id="generate-button"><h4>generate</h4></button>
+        <div id="bpm-box">
+            <label for="bpm" id="bpm-label">BPM (40-400):</label>
+            <input type="number" id="bpm" name="bpm" min="40" max="400" value="120">
+        </div>
+        <button type="button" id="play-button"><h4>play melody</h4></button>
+    </div>
     <h2>Choose which notes to allow in the melody by scrolling through the piano and clicking keys to add or remove them, or set a range by choosing the lowest and highest notes.</h2>
     <form>
         <div id="settings-bar">
@@ -491,23 +500,19 @@
             <div id="notes-num-box">
                 <label for="notes-num">Number of notes:</label>
                 <p id="note-range-value">3</p>
-                <input type="range" id="notes-num" name="notesNumber" min="3" max="24" value="3">
+                <input type="range" id="notes-num" name="notesNumber" min="3" max="32" value="3">
             </div>
             <div id="max-step-box">
                 <label for="max-step">Max step size:</label>
                 <p id="step-range-value">1 note</p>
                 <input type="range" id="max-step" name="maxStepSize" min="1" max="87" value="1">
             </div>
+            <div id="show-melody-box">
+                <input type="checkbox" id="show-melody" name="show-melody" value="true">
+                <label for="show-melody">Show melody</label>
+            </div>
         </div>
     </form>
-    <div id="buttons-container">
-        <button type="button" id="generate-button"><h4>generate</h4></button>
-        <button type="button" id="play-button"><h4>play melody</h4></button>
-        <div id="bpm-box">
-            <label for="bpm" id="bpm-label">BPM (40-400):</label>
-            <input type="number" id="bpm" name="bpm" min="40" max="400" value="120">
-        </div>
-    </div>
     <audio id="audio" type="audio" src="./resources/sounds/Notes.mp3" loop></audio>
   </body>
 </html>

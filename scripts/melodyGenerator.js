@@ -1,9 +1,15 @@
 const selectBoxes = document.getElementsByTagName("select");
 const keys = document.getElementById("piano-container").children;
+const melodyDisplay = document.getElementById("melody-display");
+const lowestNoteOptions = Array.from(document.getElementById("lowest-note").children);
+const highestNoteOptions = Array.from(document.getElementById("highest-note").children);
 const startingNoteSelector = document.getElementById("starting-note");
+const startingNoteOptions = Array.from(document.getElementById("starting-note").children);
 const endingNoteSelector = document.getElementById("ending-note");
+const endingNoteOptions = Array.from(document.getElementById("ending-note").children);
 const notesNumSelector = document.getElementById("notes-num");
 const maxStepSelector = document.getElementById("max-step");
+const showMelodyCheckbox = document.getElementById("show-melody");
 const bpmInput = document.getElementById("bpm");
 const generateButton = document.getElementById("generate-button");
 const playButton = document.getElementById("play-button");
@@ -12,6 +18,7 @@ let selectedNotes = [];
 let melodyIndices = [];
 let melody = [];
 let melodySounds = [];
+let keyPlaying;
 // let noteTimestamps = [];
 let timeouts = [];
 let allowPlay;
@@ -20,6 +27,7 @@ let highKey;
 let bpmTiming;
 let fadeOutConstant;
 let fadingTimeout;
+let keyTimeout;
 // let fadeInterval;
 const sounds = {};
 for (let i = 0; i < keys.length; i++) {
@@ -59,8 +67,22 @@ function updateSelectedKeys() {
             // If key is selected but not in selected keys array yet
             if (!selectedNotes.find((element) => keyToCheck.getAttribute("number") == element)) {
                 let keyNumber = Number(keyToCheck.getAttribute("number"));
-                startingNoteSelector[keyNumber].removeAttribute("style");
-                endingNoteSelector[keyNumber].removeAttribute("style");
+                if (!Array.from(document.getElementById("starting-note").children).includes(startingNoteOptions[keyNumber])) {
+                    let insertBeforeOption = Array.from(document.getElementById("starting-note").children).find((option) => Number(option.getAttribute("number")) > keyNumber || option.getAttribute("number") == 'any');
+                    if (insertBeforeOption != undefined) {
+                        document.getElementById("starting-note").insertBefore(startingNoteOptions[keyNumber], insertBeforeOption);
+                    } else {
+                        document.getElementById("starting-note").appendChild(startingNoteOptions[keyNumber]);
+                    }
+                }
+                if (!Array.from(document.getElementById("ending-note").children).includes(endingNoteOptions[keyNumber])) {
+                    let insertBeforeOption = Array.from(document.getElementById("ending-note").children).find((option) => Number(option.getAttribute("number")) > keyNumber || option.getAttribute("number") == 'any');
+                    if (insertBeforeOption != undefined) {
+                        document.getElementById("ending-note").insertBefore(endingNoteOptions[keyNumber], insertBeforeOption);
+                    } else {
+                        document.getElementById("ending-note").appendChild(endingNoteOptions[keyNumber]);
+                    }
+                }
                 // If key to add is highest key
                 if (!selectedNotes.find((element) => Number(keyToCheck.getAttribute("number")) < Number(element))) {
                     selectedNotes.push(keyToCheck.getAttribute("number"));
@@ -74,22 +96,22 @@ function updateSelectedKeys() {
             let keyIndex = selectedNotes.indexOf(keyToCheck.getAttribute("number"));
             selectedNotes.splice(keyIndex, 1);
             let keyNumber = Number(keyToCheck.getAttribute("number"));
-            if (startingNoteSelector[keyNumber].value == startingNoteSelector.value) {
+            if (startingNoteOptions[keyNumber].value == startingNoteSelector.value) {
                 let anyOption = startingNoteSelector.querySelector('[value="ANY"]');
                 anyOption.setAttribute('selected', '');
                 startingNoteSelector.value = 'ANY';
             }
-            if (endingNoteSelector[keyNumber].value == endingNoteSelector.value) {
+            if (endingNoteOptions[keyNumber].value == endingNoteSelector.value) {
                 let anyOption = endingNoteSelector.querySelector('[value="ANY"]');
                 anyOption.setAttribute('selected', '');
                 endingNoteSelector.value = 'ANY';
             }
-            startingNoteSelector[keyNumber].style.display = "none";
-            endingNoteSelector[keyNumber].style.display = "none";
+            startingNoteOptions[keyNumber].remove();
+            endingNoteOptions[keyNumber].remove();
         } else {
             let keyNumber = Number(keyToCheck.getAttribute("number"));
-            startingNoteSelector[keyNumber].style.display = "none";
-            endingNoteSelector[keyNumber].style.display = "none";
+            startingNoteOptions[keyNumber].remove();
+            endingNoteOptions[keyNumber].remove();
         }
     }
     let minStepSize = 87;
@@ -112,7 +134,7 @@ function updateSelectedKeys() {
 }
 
 for (let selectBox of selectBoxes) {
-    selectBox.addEventListener("input", () => {
+    selectBox.addEventListener("change", () => {
         if (selectBox.getAttribute("id") == "lowest-note") {
             if (lowKey != undefined) {
                 lowKey.removeAttribute("style");
@@ -121,10 +143,19 @@ for (let selectBox of selectBoxes) {
             targetKey.style.backgroundColor = "hsl(207, 66%, 50%)";
             lowKey = targetKey;
             for (let i = 0; i < 88; i++) {
-                if (i <= lowKey.getAttribute("number")) {
-                    document.getElementById("highest-note")[i].style.display = "none";
+                if (i <= Number(lowKey.getAttribute("number"))) {
+                    highestNoteOptions[i].remove();
                 } else {
-                    document.getElementById("highest-note")[i].removeAttribute("style");
+                    if (!Array.from(document.getElementById("highest-note").children).includes(highestNoteOptions[i])) {
+                        console.log('needs to be added');
+                        let insertBeforeOption = Array.from(document.getElementById("highest-note").children).find((option) => Number(option.getAttribute("number")) > i);
+                        console.log(insertBeforeOption);
+                        if (insertBeforeOption != undefined) {
+                            document.getElementById("highest-note").insertBefore(highestNoteOptions[i], insertBeforeOption);
+                        } else {
+                            document.getElementById("highest-note").appendChild(highestNoteOptions[i]);
+                        }
+                    }
                 }
             }
         }
@@ -135,11 +166,21 @@ for (let selectBox of selectBoxes) {
             let targetKey = document.getElementById(selectBox.value);
             targetKey.style.backgroundColor = "hsl(207, 66%, 50%)";
             highKey = targetKey;
+            console.log
             for (let i = 0; i < 88; i++) {
-                if (i >= highKey.getAttribute("number")) {
-                    document.getElementById("lowest-note")[i].style.display = "none";
+                if (i >= Number(highKey.getAttribute("number"))) {
+                    lowestNoteOptions[i].remove();
                 } else {
-                    document.getElementById("lowest-note")[i].removeAttribute("style");
+                    if (!Array.from(document.getElementById("lowest-note").children).includes(lowestNoteOptions[i])) {
+                        console.log('needs to be added');
+                        let insertBeforeOption = Array.from(document.getElementById("lowest-note").children).find((option) => Number(option.getAttribute("number")) > i);
+                        console.log(insertBeforeOption);
+                        if (insertBeforeOption != undefined) {
+                            document.getElementById("lowest-note").insertBefore(lowestNoteOptions[i], insertBeforeOption);
+                        } else {
+                            document.getElementById("lowest-note").appendChild(lowestNoteOptions[i]);
+                        }
+                    }
                 }
             }
         }
@@ -147,12 +188,26 @@ for (let selectBox of selectBoxes) {
             for (let i = 0; i < 88; i++) {
                 if (lowKey.getAttribute("number") <= i && i <= highKey.getAttribute("number")) {
                     keys[i].style.backgroundColor = "hsl(207, 66%, 50%)";
-                    startingNoteSelector[i].removeAttribute("style");
-                    endingNoteSelector[i].removeAttribute("style");
+                    if (!Array.from(document.getElementById("starting-note").children).includes(startingNoteOptions[i])) {
+                        let insertBeforeOption = Array.from(document.getElementById("starting-note").children).find((option) => Number(option.getAttribute("number")) > i || option.getAttribute("number") == 'any');
+                        if (insertBeforeOption != undefined) {
+                            document.getElementById("starting-note").insertBefore(startingNoteOptions[i], insertBeforeOption);
+                        } else {
+                            document.getElementById("starting-note").appendChild(startingNoteOptions[i]);
+                        }
+                    }
+                    if (!Array.from(document.getElementById("ending-note").children).includes(endingNoteOptions[i])) {
+                        let insertBeforeOption = Array.from(document.getElementById("ending-note").children).find((option) => Number(option.getAttribute("number")) > i || option.getAttribute("number") == 'any');
+                        if (insertBeforeOption != undefined) {
+                            document.getElementById("ending-note").insertBefore(endingNoteOptions[i], insertBeforeOption);
+                        } else {
+                            document.getElementById("ending-note").appendChild(endingNoteOptions[i]);
+                        }
+                    }
                 } else {
                     keys[i].removeAttribute("style");
-                    startingNoteSelector[i].style.display = "none";
-                    endingNoteSelector[i].style.display = "none";
+                    startingNoteOptions[i].remove();
+                    endingNoteOptions[i].remove();
                 }
             }
         }
@@ -180,6 +235,26 @@ for (let key of keys) {
             key.style.backgroundColor = "hsl(207, 66%, 50%)";
         }
         updateSelectedKeys();
+        if (allowPlay != false) {
+            if (keyPlaying != sounds[key.getAttribute('id')] && keyPlaying != undefined) {
+                keyPlaying.fade(1, 0, 75);
+                let lastKeyPlaying = keyPlaying;
+                setTimeout(() => {
+                    lastKeyPlaying.stop();
+                }, 75);
+            }
+            console.log(key.getAttribute('number'));
+            if (keyPlaying == sounds[key.getAttribute('id')]) {
+                clearTimeout(keyTimeout);
+                keyPlaying.stop();
+            }
+            sounds[key.getAttribute('id')].fade(0, 1, 50);
+            sounds[key.getAttribute('id')].play();
+            keyPlaying = sounds[key.getAttribute('id')];
+            keyTimeout = setTimeout(() => {
+                sounds[key.getAttribute('id')].fade(1, 0, 75);
+            }, 500);
+        }
     })
 }
 
@@ -195,6 +270,15 @@ maxStepSelector.addEventListener("input", () => {
     }
 })
 
+showMelodyCheckbox.addEventListener("change", () => {
+    if (showMelodyCheckbox.checked && melody.length > 0) {
+        let melodyText = melody.join(', ');
+        melodyDisplay.innerText = melodyText;
+    } else {
+        melodyDisplay.innerText = '';
+    }
+})
+
 generateButton.addEventListener("click", () => {
     if (selectedNotes[0] != undefined) {
         generateButton.style.backgroundColor = "hsl(37, 94%, 62%)";
@@ -206,7 +290,13 @@ generateButton.addEventListener("click", () => {
             for (let timeout of timeouts) {
                 clearTimeout(timeout);
             }
+            for (let melodySound of melodySounds) {
+                melodySound.stop();
+            }
             clearTimeout(fadingTimeout);
+            for (let note of selectedNotes) {
+                keys[Number(note)].style.backgroundColor = "hsl(207, 66%, 50%)";
+            }
         }
         let notesNumber = Number(notesNumSelector.value);
         let maxStepSize = Number(maxStepSelector.value);
@@ -268,15 +358,20 @@ generateButton.addEventListener("click", () => {
                 melody[i] = keys[selectedNotes[melodyIndices[i]]].getAttribute("id");
                 console.log(`${melody}`);
             } else {
-                do {
-                    index = randomNum(selectedNotes.length - 1);
-                    stepSize = Math.abs(Number(selectedNotes[index]) - Number(selectedNotes[melodyIndices[i - 1]]));
-                    if (stepSize <= maxStepSize) {
-                        melodyIndices[i] = index;
-                        melody[i] = keys[selectedNotes[index]].getAttribute("id");
-                    }
-                } while (stepSize > maxStepSize);
+                options[i] = options[i].filter((note) => (Math.abs(Number(note) - Number(selectedNotes[melodyIndices[i - 1]]))) <= maxStepSize);
+                console.log(`options are ${options[i]}`);
+                index = randomNum(options[i].length - 1); //chooses random index in selected notes.
+                melodyIndices[i] = selectedNotes.indexOf(options[i][index]);
+                console.log(melodyIndices[i]);
+                melody[i] = keys[selectedNotes[melodyIndices[i]]].getAttribute("id");
+                console.log(`${melody}`);
             }
+        }
+        if (showMelodyCheckbox.checked) {
+            let melodyText = melody.join(', ');
+            melodyDisplay.innerText = melodyText;
+        } else {
+            melodyDisplay.innerText = '';
         }
         playButton.style.backgroundColor = "hsl(120, 58%, 48%)";
         allowPlay = true;
@@ -285,6 +380,10 @@ generateButton.addEventListener("click", () => {
 
 playButton.addEventListener("click", () => {
     playButton.removeAttribute("style");
+    clearTimeout(keyTimeout);
+    if (keyPlaying != undefined) {
+        keyPlaying.stop();
+    }
     if (timeouts[0] != undefined && allowPlay) {
         for (let timeout of timeouts) {
             clearTimeout(timeout);
@@ -330,9 +429,12 @@ playButton.addEventListener("click", () => {
             timeouts[i] = setTimeout(() => {
                 if (i > 0) {
                     melodySounds[i - 1].stop();
+                    keys[melody[i - 1]].style.backgroundColor = "hsl(207, 66%, 50%)";
+
                 }
                 melodySounds[i].fade(0, 1, (bpmTiming / 10));
                 melodySounds[i].play();
+                keys[melody[i]].style.backgroundColor = "hsl(37, 80%, 50%)";
                 fadingTimeout = setTimeout(() => {
                     if (i == melodySounds.length - 1) {
                         melodySounds[i].fade(1, 0, 2000 - bpmTiming + fadeOutConstant);
@@ -345,6 +447,7 @@ playButton.addEventListener("click", () => {
                         for (let melodySound of melodySounds) {
                             melodySound.stop();
                         }
+                        keys[melody[melody.length - 1]].style.backgroundColor = "hsl(207, 66%, 50%)";
                         allowPlay = true;
                         playButton.style.backgroundColor = "hsl(120, 58%, 48%)";
                     }, 2000);
