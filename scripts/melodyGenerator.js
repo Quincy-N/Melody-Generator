@@ -135,7 +135,7 @@ function updateSelectedKeys() {
 }
 
 for (let selectBox of selectBoxes) {
-    selectBox.addEventListener("change", () => {
+    selectBox.addEventListener("input", () => {
         if (selectBox.getAttribute("id") == "lowest-note") {
             if (lowKey != undefined) {
                 lowKey.removeAttribute("style");
@@ -185,7 +185,7 @@ for (let selectBox of selectBoxes) {
                 }
             }
         }
-        if (lowKey != undefined && highKey != undefined) {
+        if ((selectBox.getAttribute("id") == "lowest-note" || selectBox.getAttribute("id") == "highest-note") && lowKey != undefined && highKey != undefined) {
             for (let i = 0; i < 88; i++) {
                 if (lowKey.getAttribute("number") <= i && i <= highKey.getAttribute("number")) {
                     keys[i].style.backgroundColor = "hsl(207, 66%, 50%)";
@@ -212,7 +212,6 @@ for (let selectBox of selectBoxes) {
                 }
             }
         }
-        updateSelectedKeys();
         if (selectBox.getAttribute("id") == "starting-note") {
             startingNoteSelector.querySelector('[selected]').removeAttribute('selected');
             let targetOption = startingNoteSelector.querySelector(`[value="${startingNoteSelector.value}"]`);
@@ -223,6 +222,7 @@ for (let selectBox of selectBoxes) {
             let targetOption = endingNoteSelector.querySelector(`[value="${endingNoteSelector.value}"]`);
             targetOption.setAttribute('selected', '');
         }
+        updateSelectedKeys();
     })
 }
 
