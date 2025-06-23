@@ -298,11 +298,11 @@ showMelodyCheckbox.addEventListener("change", () => {
 
 generateButton.addEventListener("click", () => {
     if (selectedNotes[0] != undefined) {
-        generateButton.style.backgroundColor = "hsl(37, 94%, 62%)";
+        generateButton.style.backgroundColor = "hsl(207, 66%, 50%)";
         generateButton.style.transform = "scale(.95,.95)";
         removeHighlight = setTimeout(() => {
             generateButton.removeAttribute("style");
-        }, 200);
+        }, 300);
         if (timeouts[0] != undefined && melody[0] != undefined) {
             for (let timeout of timeouts) {
                 clearTimeout(timeout);
